@@ -17,7 +17,7 @@ export default function UnitSwitch({
     <div className="text-sm flex items-center justify-center h-7 border border-solid border-gray-400 rounded">
       <div
         className={`cursor-pointer flex items-center justify-center h-full px-2 rounded-l ${
-          unit !== "far" ? "bg-[#8BE9FD]" : ""
+          unit !== "far" ? "bg-[#BD93F9] text-white font-bold" : ""
         }`}
         onClick={() => handleUnitChange("cel")}>
         &deg; C
@@ -25,7 +25,7 @@ export default function UnitSwitch({
       <div className="h-full border-l-[1px] border-solid border-gray-400"></div>
       <div
         className={`cursor-pointer flex items-center justify-center h-full px-2 rounded-r ${
-          unit === "far" ? "bg-[#8BE9FD]" : ""
+          unit === "far" ? "bg-[#BD93F9] text-white font-bold" : ""
         }`}
         onClick={() => handleUnitChange("far")}>
         &deg; F
