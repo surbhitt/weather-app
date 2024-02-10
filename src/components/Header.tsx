@@ -3,10 +3,12 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Header() {
   const [loc, setLoc] = useState("");
-  const [, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSearch = () => {
-    setSearchParams({ search: loc });
+    console.log("loc =", loc);
+    if (loc) setSearchParams({ search: loc });
+    else searchParams.delete("search");
   };
 
   return (
