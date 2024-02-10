@@ -6,9 +6,9 @@ export default function Header() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSearch = () => {
-    console.log("loc =", loc);
     if (loc) setSearchParams({ search: loc });
     else searchParams.delete("search");
+    setLoc("");
   };
 
   return (
