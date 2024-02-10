@@ -1,9 +1,15 @@
-import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import UnitSwitch from "./UnitSwitch";
+import { SetURLSearchParams } from "react-router-dom";
 
-export default function Bar() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const loc = searchParams.get("loc");
+export default function Bar({
+  searchParams,
+  setSearchParams,
+}: {
+  searchParams: URLSearchParams;
+  setSearchParams: SetURLSearchParams;
+}) {
+  const [loc] = useState(searchParams.get("loc"));
 
   const handleRemoveLoc = () => {
     console.log("remove");
