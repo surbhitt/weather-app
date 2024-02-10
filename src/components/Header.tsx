@@ -3,11 +3,20 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Header() {
   const [loc, setLoc] = useState("");
+  const [history, setHistory] = useState<string[]>([]);
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const addToHistory = () => {
+    if (history.length > 5) history.length = 5;
+    setHistory([loc, ...history]);
+  };
+
+  // TODO: bug spaces are being taken
   const handleSearch = () => {
-    if (loc) setSearchParams({ search: loc });
-    else searchParams.delete("search");
+    if (loc) {
+      addToHistory();
+      setSearchParams({ loc });
+    } else searchParams.set("", "");
     setLoc("");
   };
 
@@ -18,7 +27,7 @@ export default function Header() {
         <input
           className="w-full pl-5 pr-14 border rounded-full text-[0.9rem] placeholder:text-gray-500 border-gray-400 h-10  outline-none"
           value={loc}
-          placeholder="Search state..."
+          placeholder="Search location..."
           onChange={(e) => setLoc(e.target.value)}
         />
         <div
