@@ -5,7 +5,7 @@ All features according to the specifications. <br>
 Uses the [Open Weather Map](https://openweathermap.org/) API. <br>
 **hosted [here](https://regal-tartufo-d0110a.netlify.app/)**
 
-![vid](/showcase/weather.webm)
+![vid](/showcase/weather.webm.mov)
 
 **3rd party deps**
 
