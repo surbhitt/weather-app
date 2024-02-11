@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { weatherApiInt } from "../../../interface";
 // import palette from "./colorPalette";
-const apiKey = ""; //import.meta.env.VITE_WEATHER_API;
+import { calculateTemp, calculateAccent } from "../../../utils/util-funcs";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../../../@/components/ui/tooltip";
+
+const apiKey = ""; // import.meta.env.VITE_WEATHER_API;
 
 const cities = [
   "amsterdam",
@@ -19,25 +27,6 @@ const cities = [
   "new-york",
   "rio-de-janeiro",
 ];
-
-const calculateTemp = (temp: number, unit: string) => {
-  const tempC = temp - 273;
-  let tempFinal;
-  if (unit === "far") {
-    tempFinal = `${tempC * (9 / 5) + 32} °F`;
-  } else tempFinal = `${tempC.toFixed(1)} °C`;
-  return tempFinal;
-};
-
-const calculateAccent = (temp: number) => {
-  const tempC = temp - 273;
-  if (tempC < 10) return "bg-[#83a598]";
-  else if (10 <= tempC && tempC < 20) return "bg-[#8ec07c]";
-  else if (20 <= tempC && tempC < 30) return "bg-[#b8bb26]";
-  else if (30 <= tempC && tempC < 40) return "bg-[#fabd2f]";
-  else if (40 <= tempC && tempC < 50) return "bg-[#fe8019]";
-  else return "bg-[#fb4934]";
-};
 
 export default function CityGrid({ unit }: { unit: string }) {
   return (
@@ -66,6 +55,7 @@ function Card({ unit, loc }: { unit: string; loc: string }) {
     } catch (err) {
       console.log(err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const iconUrl =
@@ -85,32 +75,42 @@ function Card({ unit, loc }: { unit: string; loc: string }) {
                   apiData.main.temp_max
                 )} text-gray-100 font-bold`
               : "text-gray-500 font-semibold"
-          } flex items-center justify-center w-full h-16 text-center p-2 border-b-[1px] border-solid border-gray-400`}>
+          } flex items-center justify-center w-full h-16 text-center p-2 border-b-[1px] border-solid border-gray-400 rounded-tr-xl`}>
           {loc[0].toLocaleUpperCase() + loc.substring(1)}
           {iconUrl && <img src={iconUrl} className="h-10 w-10" />}
         </p>
-        <div className="flex flex-col justify-center ml-5 mt-5">
+        <div className="flex flex-col justify-center mt-5">
           {apiData && apiData.cod === 200 ? (
-            <div className="grid grid-cols-5 text-base">
-              <div className="col-span-3 text-secondary-500">Maximum</div>
-              <div className="col-span-2">
-                {calculateTemp(apiData.main.temp_max, unit)}
+            <CardToolTip weather={apiData.weather[0].description}>
+              <div className="mx-5 grid grid-cols-5 text-base">
+                <div className="col-span-3 text-left text-secondary-500">
+                  Maximum
+                </div>
+                <div className="text-right col-span-2">
+                  {calculateTemp(apiData.main.temp_max, unit)}
+                </div>
+                <div className="col-span-3 text-left text-secondary-500">
+                  Minimum
+                </div>
+                <div className="text-right col-span-2">
+                  {calculateTemp(apiData.main.temp_min, unit)}
+                </div>
+                <div className="col-span-3 text-left text-secondary-500">
+                  Wind Speed
+                </div>
+                <div className="text-right col-span-2">
+                  {apiData.wind.speed ?? "N/A"}
+                  {" m/s"}
+                </div>
+                <div className="col-span-3 text-left text-secondary-500">
+                  Humidity
+                </div>
+                <div className="text-right col-span-2">
+                  {apiData.main.humidity ?? "N/A"}
+                  {" %"}
+                </div>
               </div>
-              <div className="col-span-3 text-secondary-500">Minimum</div>
-              <div className="col-span-2">
-                {calculateTemp(apiData.main.temp_min, unit)}
-              </div>
-              <div className="col-span-3 text-secondary-500">Wind Speed</div>
-              <div className="col-span-2">
-                {apiData.wind.speed ?? "N/A"}
-                {" m/s"}
-              </div>
-              <div className="col-span-3 text-secondary-500">Humidity</div>
-              <div className="col-span-2">
-                {apiData.main.humidity ?? "N/A"}
-                {" %"}
-              </div>
-            </div>
+            </CardToolTip>
           ) : (
             <div className="text-sm text-gray-500 flex flex-col items-center">
               <img src="/err.svg" className="h-20 w-20 opacity-70" />
@@ -122,3 +122,28 @@ function Card({ unit, loc }: { unit: string; loc: string }) {
     </div>
   );
 }
+
+const CardToolTip = ({
+  children,
+  weather,
+}: {
+  children: React.ReactElement;
+  weather: string;
+}) => {
+  return (
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipContent className="flex flex-col items-center bg-white z-20 bg-opacity-100 p-2 rounded border border-solid border-black">
+          <div>
+            The weather at this location is{" "}
+            <span className="italic">{weather}</span>
+          </div>
+          <div className="text-xs text-gray-600">
+            click on the card to expand
+          </div>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+};
