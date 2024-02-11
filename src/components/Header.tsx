@@ -39,7 +39,7 @@ export default function Header() {
       addToHistory();
       setSearchParams({ loc });
       // TODO: should not need this
-      window.location.reload();
+      // window.location.reload();
     }
     setLoc("");
   };
