@@ -11,7 +11,7 @@ import Chart from "./Chart";
 
 export default function WeatherCard({ unit }: { unit: string }) {
   const [searchParams] = useSearchParams();
-  const [loc] = useState(searchParams.get("loc") ?? "");
+  const loc = searchParams.get("loc") ?? "";
 
   const [apiData, setApiData] = useState<weatherApiInt>();
   const apiKey = import.meta.env.VITE_WEATHER_API;
@@ -30,12 +30,16 @@ export default function WeatherCard({ unit }: { unit: string }) {
       console.log(err);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [loc]);
 
   const iconUrl =
     apiData && apiData.cod === 200
       ? `https://openweathermap.org/img/wn/${apiData?.weather[0].icon}@2x.png`
       : "";
+
+  const sliceDesc = (desc: string) => {
+    return desc.split(" ").slice(0, 2).join(" ");
+  };
 
   if (!apiData)
     return (
@@ -118,8 +122,8 @@ export default function WeatherCard({ unit }: { unit: string }) {
         </div>
         <div className="text-sm md:text-base">
           <div className="flex gap-2">
-            <span className="text-white underline underline-offset-4 font-semibold">
-              {toTitleCase(apiData?.weather[0].description)}
+            <span className="text-white text-ellipsis underline underline-offset-4 font-semibold">
+              {sliceDesc(toTitleCase(apiData?.weather[0].description))}
             </span>
           </div>
           <div className="flex gap-2 mt-2">
