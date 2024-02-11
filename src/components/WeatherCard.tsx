@@ -102,8 +102,8 @@ export default function WeatherCard({ unit }: { unit: string }) {
           </div>
         </div>
       </div>
-      <CityTable />
       <Chart />
+      <CityTable />
     </div>
   );
 }
