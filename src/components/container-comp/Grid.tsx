@@ -18,6 +18,7 @@ const apiKey = import.meta.env.VITE_WEATHER_API;
 const cities = [
   "amsterdam",
   "athens",
+  "tokyo",
   "barcelona",
   "beijing",
   "berlin",
