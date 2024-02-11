@@ -28,17 +28,17 @@ export default function Header() {
   }, []);
 
   const addToHistory = () => {
-    if (history.length > 4) history.length = 4;
-    if (loc.trim()) setHistory([loc, ...history]);
-    localStorage.setItem("history", JSON.stringify([loc, ...history]));
+    if (loc.trim()) {
+      if (history.length > 4) history.length = 4;
+      setHistory([loc, ...history]);
+      localStorage.setItem("history", JSON.stringify([loc, ...history]));
+    }
   };
 
   const handleSearch = (searchFor: string) => {
     if (searchFor.trim()) {
       addToHistory();
       setSearchParams({ loc: searchFor });
-      // TODO: should not need this
-      // window.location.reload();
     }
     setLoc("");
     setShow(false);
