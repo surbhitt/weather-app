@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { weatherApiInt } from "../../../interface";
 // import palette from "./colorPalette";
-import { calculateTemp, calculateAccent } from "../../../utils/util-funcs";
+import {
+  calculateTemp,
+  calculateAccent,
+  toTitleCase,
+} from "../../../utils/util-funcs";
 import {
   Tooltip,
   TooltipContent,
@@ -9,7 +13,7 @@ import {
   TooltipTrigger,
 } from "../../../@/components/ui/tooltip";
 
-const apiKey = ""; // import.meta.env.VITE_WEATHER_API;
+const apiKey = import.meta.env.VITE_WEATHER_API;
 
 const cities = [
   "amsterdam",
@@ -76,7 +80,7 @@ function Card({ unit, loc }: { unit: string; loc: string }) {
                 )} text-gray-100 font-bold`
               : "text-gray-500 font-semibold"
           } flex items-center justify-center w-full h-16 text-center p-2 border-b-[1px] border-solid border-gray-400 rounded-tr-xl`}>
-          {loc[0].toLocaleUpperCase() + loc.substring(1)}
+          {toTitleCase(loc)}
           {iconUrl && <img src={iconUrl} className="h-10 w-10" />}
         </p>
         <div className="flex flex-col justify-center mt-5">

@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { weatherApiInt } from "../../interface";
-import { calculateAccent, calculateTemp } from "../../utils/util-funcs";
+import {
+  calculateAccent,
+  calculateTemp,
+  toTitleCase,
+} from "../../utils/util-funcs";
 import CityTable from "./CityTable";
 import Chart from "./Chart";
 
@@ -81,7 +85,7 @@ export default function WeatherCard({ unit }: { unit: string }) {
         <div className="text-sm md:text-base">
           <div className="flex gap-2">
             <span className="text-white underline underline-offset-4 font-semibold">
-              {apiData?.weather[0].description}
+              {toTitleCase(apiData?.weather[0].description)}
             </span>
           </div>
           <div className="flex gap-2 mt-2">
