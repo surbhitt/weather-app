@@ -36,7 +36,7 @@ const cities = [
 
 export default function CityGrid({ unit }: { unit: string }) {
   return (
-    <div className="grid lg:grid-cols-3 grid-cols-2 gap-2">
+    <div className="w-full grid lg:grid-cols-3 grid-cols-2 gap-2">
       {cities.map((loc, idx) => (
         <Card key={idx} unit={unit} loc={loc} />
       ))}
