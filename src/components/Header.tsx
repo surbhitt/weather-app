@@ -3,15 +3,15 @@ import { useSearchParams } from "react-router-dom";
 
 export default function Header() {
   const [loc, setLoc] = useState("");
+  const [show, setShow] = useState(false);
   const [history, setHistory] = useState<string[]>(
     JSON.parse(localStorage.getItem("history") ?? "[]")
   );
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [show, setShow] = useState(false);
+  const [, setSearchParams] = useSearchParams();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  console.log("this was set ", localStorage.getItem("history"));
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -34,12 +34,13 @@ export default function Header() {
     console.log("this was set getItem", localStorage.getItem("history"));
   };
 
-  // TODO: bug spaces are being taken
   const handleSearch = () => {
-    if (loc) {
+    if (loc.trim()) {
       addToHistory();
       setSearchParams({ loc });
-    } else searchParams.set("", "");
+      // TODO: should not need this
+      window.location.reload();
+    }
     setLoc("");
   };
 

@@ -34,7 +34,7 @@ export default function WeatherCard({ unit }: { unit: string }) {
       : "";
 
   console.log(apiData);
-
+  if (!apiData || apiData.cod !== 200) return null;
   return (
     <div
       className={`${calculateAccent(
