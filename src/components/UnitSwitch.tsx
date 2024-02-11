@@ -5,12 +5,13 @@ export default function UnitSwitch({
   unit,
   setSearchParams,
 }: {
-  loc: string;
+  loc: string | null;
   unit: string;
   setSearchParams: SetURLSearchParams;
 }) {
   const handleUnitChange = (unit: string) => {
-    setSearchParams({ unit, loc });
+    if (loc) setSearchParams({ unit, loc });
+    else setSearchParams({ unit });
   };
 
   return (

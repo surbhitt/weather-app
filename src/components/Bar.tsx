@@ -1,6 +1,6 @@
-import { useState } from "react";
 import UnitSwitch from "./UnitSwitch";
 import { SetURLSearchParams } from "react-router-dom";
+import { toTitleCase } from "../../utils/util-funcs";
 
 export default function Bar({
   searchParams,
@@ -9,18 +9,21 @@ export default function Bar({
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
 }) {
-  const [loc] = useState(searchParams.get("loc"));
+  const loc = searchParams.get("loc");
 
   const handleRemoveLoc = () => {
     console.log("remove");
-    searchParams.delete("search");
+    const sp = new URLSearchParams(searchParams);
+    sp.delete("loc");
+    console.log("this is the res", sp.toString());
+    setSearchParams(sp);
   };
 
   return (
     <div className="flex justify-between">
       {loc ? (
         <div className="flex items-center gap-2 border border-gray-400 border-solid w-fit h-7 pl-2 rounded text-sm">
-          <p>{loc}</p>
+          <p>{toTitleCase(loc)}</p>
           <div
             className="flex items-center h-full hover:bg-gray-100 rounded-r cursor-pointer"
             onClick={handleRemoveLoc}>
@@ -35,7 +38,7 @@ export default function Bar({
         </div>
       )}
       <UnitSwitch
-        loc={loc ?? ""}
+        loc={loc}
         unit={searchParams.get("unit") ?? ""}
         setSearchParams={setSearchParams}
       />
