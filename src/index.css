@@ -139,3 +139,21 @@ table {
 body {
   font-family: "Quicksand", sans-serif;
 }
+
+.quote::before {
+  content: open-quote;
+  position: absolute;
+  top: -25px;
+  left: -45px;
+  padding: 5px;
+  font-size: 5rem;
+}
+
+.quote::after {
+  content: close-quote;
+  position: absolute;
+  top: -10px;
+  right: -45px;
+  padding: 5px;
+  font-size: 5rem;
+}
