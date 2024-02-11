@@ -12,10 +12,8 @@ export default function Bar({
   const loc = searchParams.get("loc");
 
   const handleRemoveLoc = () => {
-    console.log("remove");
     const sp = new URLSearchParams(searchParams);
     sp.delete("loc");
-    console.log("this is the res", sp.toString());
     setSearchParams(sp);
   };
 

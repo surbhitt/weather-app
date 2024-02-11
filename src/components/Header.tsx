@@ -29,28 +29,29 @@ export default function Header() {
 
   const addToHistory = () => {
     if (history.length > 4) history.length = 4;
-    setHistory([loc, ...history]);
+    if (loc.trim()) setHistory([loc, ...history]);
     localStorage.setItem("history", JSON.stringify([loc, ...history]));
-    console.log("this was set getItem", localStorage.getItem("history"));
   };
 
-  const handleSearch = () => {
-    if (loc.trim()) {
+  const handleSearch = (searchFor: string) => {
+    if (searchFor.trim()) {
       addToHistory();
-      setSearchParams({ loc });
+      setSearchParams({ loc: searchFor });
       // TODO: should not need this
       // window.location.reload();
     }
     setLoc("");
+    setShow(false);
   };
 
   return (
     <div className="w-full border-b-[1px] border-gray-200 border-solid p-5 flex justify-center md:gap-5 gap-2">
       <img src="/logo-alt.svg" height={40} width={40} />
-      <div className="w-2/3 lg:w-1/3 min-w-[150px] relative flex">
+      <div
+        ref={inputRef}
+        className="w-2/3 lg:w-1/3 min-w-[150px] relative flex">
         <input
           onFocus={() => setShow(true)}
-          ref={inputRef}
           className="relative w-full pl-5 pr-14 border rounded-full text-[0.9rem] placeholder:text-gray-500 border-gray-400 h-10  outline-none"
           value={loc}
           placeholder="Search location..."
@@ -61,6 +62,9 @@ export default function Header() {
             {history.map((sug, idx) => {
               return (
                 <div
+                  onClick={async () => {
+                    handleSearch(sug);
+                  }}
                   key={idx}
                   className="p-3 my-2 hover:bg-blue-100 transition cursor-pointer">
                   {sug}
@@ -71,7 +75,7 @@ export default function Header() {
         )}
         <div
           className="h-9 w-12 flex gap-3 rounded-r-full hover:bg-gray-100  absolute right-0.5 top-0.5 cursor-pointer"
-          onClick={handleSearch}>
+          onClick={() => handleSearch(loc)}>
           <div className=" h-full border-solid border-l-[1px] border-gray-400" />
           <img src="/search2.svg" height={25} width={25} />
         </div>
