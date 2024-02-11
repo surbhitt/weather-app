@@ -9,7 +9,7 @@ export default function Container() {
   const unit = searchParams.get("unit") ?? "";
 
   return (
-    <div className="w-11/12 grid gap-3 xl:w-4/5">
+    <div className="w-11/12 grid gap-3 xl:w-4/5 2xl:w-2/3">
       <Bar searchParams={searchParams} setSearchParams={setSearchParams} />
       <div className="w-full">
         {loc ? <WeatherCard unit={unit} /> : <CityGrid unit={unit} />}

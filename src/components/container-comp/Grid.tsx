@@ -76,9 +76,12 @@ function Card({ unit, loc }: { unit: string; loc: string }) {
   };
   return (
     <div
-      className={`flex justify-between w-full h-56 text-lg md:text-xl rounded cursor-pointer hover:shadow-2xl`}
+      className={`flex justify-between h-56 text-lg md:text-xl rounded cursor-pointer hover:shadow-2xl`}
       onClick={handleCard}>
-      <img src={`/citiesIllustration/${loc}.jpg`} className="opacity-80" />
+      <img
+        src={`/citiesIllustration/${loc}.jpg`}
+        className="w-full opacity-80"
+      />
       <div className="border border-gray-400 rounded-r-xl border-solid hidden md:block w-full">
         <p
           className={`${
