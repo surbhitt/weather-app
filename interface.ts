@@ -40,5 +40,6 @@ export interface weatherApiInt {
   timezone: number;
   id: number;
   name: string;
-  cod: number;
+  cod: string | number;
+  message?: string;
 }

@@ -33,7 +33,7 @@ export default function WeatherCard({ unit }: { unit: string }) {
   }, [loc]);
 
   const iconUrl =
-    apiData && apiData.cod === 200
+    apiData && apiData.cod === "200"
       ? `https://openweathermap.org/img/wn/${apiData?.weather[0].icon}@2x.png`
       : "";
 
@@ -66,7 +66,15 @@ export default function WeatherCard({ unit }: { unit: string }) {
       </div>
     );
 
-  if (apiData.cod !== 200)
+  if (apiData.cod === "404") {
+    return (
+      <div className="flex flex-col gap-2 rounded-xl w-full h-96 bg-gray-300 items-center justify-center">
+        <p className="text-6xl font-bold text-gray-400">{apiData.cod}</p>
+        <p className="text-lg font-bold text-gray-500">{apiData.message}</p>
+      </div>
+    );
+  } else if (apiData.cod !== "200") {
+    console.log("cod", apiData.cod);
     return (
       <div className="rounded-xl w-full h-96 bg-gray-300 flex items-center justify-center">
         <img src="/err.svg" className="h-32 w-32 opacity-70" />
@@ -76,6 +84,7 @@ export default function WeatherCard({ unit }: { unit: string }) {
         </div>
       </div>
     );
+  }
 
   return (
     <div
