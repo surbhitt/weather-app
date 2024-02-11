@@ -36,7 +36,7 @@ const cities = [
 
 export default function CityGrid({ unit }: { unit: string }) {
   return (
-    <div className="w-full grid lg:grid-cols-3 grid-cols-2 gap-2">
+    <div className="w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-2">
       {cities.map((loc, idx) => (
         <Card key={idx} unit={unit} loc={loc} />
       ))}
@@ -82,7 +82,7 @@ function Card({ unit, loc }: { unit: string; loc: string }) {
         src={`/citiesIllustration/${loc}.jpg`}
         className="w-full opacity-80"
       />
-      <div className="border border-gray-400 rounded-r-xl border-solid hidden md:block w-full">
+      <div className="border border-gray-400 rounded-r-xl border-solid w-full">
         <p
           className={`${
             apiData && apiData.cod === 200
