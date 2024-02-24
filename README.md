@@ -3,7 +3,7 @@
 Responsive <br>
 All features according to the specifications. <br>
 Uses the [Open Weather Map](https://openweathermap.org/) API. <br>
-**hosted [here](https://regal-tartufo-d0110a.netlify.app/)**
+**hosted [here](https://elino.netlify.app/)**
 
 **3rd party deps**
 
